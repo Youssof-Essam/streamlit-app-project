@@ -64,13 +64,17 @@ st.plotly_chart(fig3)
 st.header("2. Industry Overview")
 
 # Market cap analysis
-st.header("I. Market Cap Distribution")
+st.header("I. Market Cap Analysis")
 fig2 = px.box(filtered_df, x='industry_labels', y='market cap in Million', 
-             title="Market Cap Distribution")
+             title="Market Distribution")
 st.plotly_chart(fig2)
 fig8 = px.violin(filtered_df, x='industry_labels', y='market cap in Million', 
-             title="Market Cap Distribution")
+             title="Market Distribution")
 st.plotly_chart(fig8)
+fig12 = px.bar(filtered_df, x='name', y='market cap in Million', 
+             color='industry_labels', title="Market Distribution")
+st.plotly_chart(fig12,key="unique2")
+
 # Top companies
 st.subheader("Top 10 Companies by Market Cap")
 top_companies = filtered_df.nlargest(10, 'market cap in Million')
@@ -78,7 +82,27 @@ fig7 = px.bar(top_companies, x='name', y='market cap in Million',
              color='industry_labels', title="Market Cap Leaders")
 st.plotly_chart(fig7,key="unique")
 
-st.header("II. Industry Performance Analysis")
+
+# Revenue analysis
+st.header("II. Revenue Analysis")
+fig22 = px.box(filtered_df, x='industry_labels', y='revenue in Million', 
+             title="Revenue Distribution")
+st.plotly_chart(fig22)
+fig82 = px.violin(filtered_df, x='industry_labels', y='revenue in Million', 
+             title="Revenue Distribution")
+st.plotly_chart(fig82)
+fig122 = px.bar(filtered_df, x='name', y='revenue in Million', 
+             color='industry_labels', title="Revenue Distribution")
+st.plotly_chart(fig122,key="unique22")
+
+# Top companies
+st.subheader("Top 10 Companies by Revenue")
+top_companies2 = filtered_df.nlargest(10, 'revenue in Million')
+fig72 = px.bar(top_companies2, x='name', y='revenue in Million', 
+             color='industry_labels', title='revenue in Million')
+st.plotly_chart(fig72,key="unique12")
+
+st.header("III. Industry Performance Analysis")
 indusrty_data = df_history[df_history['symbol'].isin(filtered_df['symbol'])]
 average_per_day = indusrty_data.groupby(by='date').agg(closing = ("close",'mean'))
 if not average_per_day.empty:
